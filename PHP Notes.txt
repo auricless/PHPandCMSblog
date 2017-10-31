@@ -1,0 +1,363 @@
+PHP DEVELOPMENT COURSE
+
+bootstrap 3 CDN:
+https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
+
+Tools to downlaod
+-XAMPP
+*Code Editor
+-Brackets
+
+xampp/htdocs
+
+built-in function
+-echo
+  -display a text or variable in webpage
+
+concatenation is "."
+- $fName . $lName
+
+declare array in php
+- $myArray = array($name, 123, "hello", "123");
+
+built-in function
+-print_r
+  - shows the value of each index in array
+
+declare array and change index ref to label
+-$myArray = array("first_name" => "Aron Ciruela")
+
+Using forLoop
+-$arr = array(10, 20, 30); 
+$max = sizeof($arr);
+for($i = 0; $i < $max; $i++){
+   //do something here
+}
+
+Defining constant
+define("NAME", "ARON CIRUELA");
+echo NAME;
+
+PHP Math Built-in Functions
+-pow(2, 7);
+  - return 2(base) to the 7th power(exponent) or 128
+-rand();
+  -return a random number;
+-rand(1, 1000);
+  -return a random number from 1 - 1000(1000 is excluded)
+-sqrt(100);
+  -squareroot of a 100 or return 10
+-ceil(4.6);
+  -round it up to 5
+-floor(4.6);
+  -round it down to 4
+
+PHP String Built-in Functions
+-strlen($string);
+  -return the length of a string
+-strtoupper($string);
+  -return the string in UpperCase
+-strtolower($string);
+  -return the string in LowerCase
+
+PHP Array Built-in Functions
+-max($arr);
+  -return max value in array
+-min($arr);
+  -return min value in array
+-sort($arr);
+  -sort the array values from lowest to highest
+-print_r($arr)
+  -return the valaue in each index in array
+- in_array($string, $arr);
+  - search the first param in the arr (2nd param)
+
+PHP checking form submission
+-if(isset($_POST["submit"])){
+  echo "POST is set and checked!";
+}
+
+PHP extracting info
+--if(isset($_POST["submit"])){
+  $user = $_POST['username'];
+  $pass = $_POST['password'];
+}
+
+-----PHP Forms-----
+
+<?php
+if (isset($_POST['submit'])) {
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+
+	echo "your username is " . $username . " and your password is " . $password ;
+}
+
+
+?>
+
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<form action="form.php" method="POST">
+
+<input type="text" placeholder="username" name="username">
+<input type="password" placeholder="password" name="password">
+<input type="submit" name="submit">
+
+</form>
+
+</body>
+</html>
+
+-----PHP form process-----
+ <?php
+if (isset($_POST['submit'])) {
+	
+	$name = array("jimmy", "christian", "Johnny", "Elaine");
+
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+
+	$min = 5;
+	$max = 10;
+
+	if(!in_array($username, $name)){
+		echo "Acces Denied";
+	}else{
+		echo "Access Granted";
+	}
+}
+?>
+
+Intro to Database
+-MYSQL is the databse popular for PHP
+-type localhost/phpmyadmin
+-Database tab, create database
+-SQL query, CREATE DATABASE *name*
+-Click home icon, check the db, drop
+
+Creating connection to MYSQL in PHP
+-$con = mysqli_connect("lcoalhost, "root", "", "loginapp");
+   -passing the function mysqli_connect with its parameter; localhost, username, password, database.
+
+-if($con){
+  echo "connected";
+}else{
+  die("connection failed");
+}
+
+-----CRUD in PHP-----
+C - Create    => $query = INSERT INTO users(username, password) VALUES($username, $password); 
+R - Read       => $query = SELECT * FROM users; [CODE] while($row = mysqli_fetch_assoc($result){ print_r($row); })
+U - Update  => $query = UPDATE users SET username = '$username', password = '$password' WHERE id = $id;
+D - Delete   => $query = DELETE FROM users WHERE id = $id;
+
+
+CREATE
+-$query = "INSERT INTO users('username', 'password') "
+$query .= "VALUES('$username', '$password')";
+
+$result = mysqli_query($con, $query);
+
+if(!$result){
+  die("FAILED");
+}else{
+  echo "SUCCESSFUL";
+}
+
+READ
+-$query = "SELECT * FROM users";
+$result = mysqli_query($con, $query);
+if(!$result){
+  die("FAILED");
+}else{
+  echo "SUCCESS";
+}
+
+while($row = mysqli_fetch_row($result)){
+  print_r($row);
+}
+
+//OR
+
+while($row = mysqli_fetch_assoc($result)){
+  print_r($row);
+}
+
+Including external file by refactoring
+-<?php include db.php ?>
+
+Checking the error
+-die("Query FAILED" . mysqli_error($con));
+
+-----UPDATE-----
+<?php
+	if (isset($_POST["submit"])) {
+		$username = $_POST["username"];
+		$password = $_POST["password"];
+		$id 	  = $_POST["id"];
+
+		$query = "UPDATE users SET ";
+		$query .= "username = '$username', ";
+		$query .= "password = '$password' ";
+		$query .= "WHERE id = $id";
+
+		$result = mysqli_query($con, $query);
+		if (!$result) {
+			die("QUERY FAILED" . mysqli_error($con));
+		}
+	}
+?>
+
+-----DELETE-----
+-function deleteRow(){
+		global $con;
+		if (isset($_POST["submit"])) {
+			$username = $_POST["username"];
+			$password = $_POST["password"];
+			$id 	  = $_POST["id"];
+
+			$query = "DELETE FROM users ";
+			$query .= "WHERE id = $id";
+
+			$result = mysqli_query($con, $query);
+			if (!$result) {
+				die("QUERY FAILED" . mysqli_error($con));
+			}
+		}
+	}
+
+PHP includes
+-create a folder within the project folder
+-refactor php codes into function to make it reusable and modular
+-dont forget to globalize $connection variable
+-refactor html codes as header and footer
+
+Sanitizing User Inputs to prevent SQL injection
+-$username = $_POST['username'];
+$password = $_POST['password'];
+$username = mysqli_real_escape_string($con, $username);
+$password = mysqli_real_escape_string($con, $password);
+
+Encripting password in PHP
+-$hashF = "$2y$10$";
+$salt = "iusesomecrazystrings22";
+$hash_and_salt = $hasF . $salt;
+$password = crypt($password, $hash_and_salt);
+
+PHP and the WEB
+-forms
+-URL/Links
+-Cookies
+-Sessions
+
+GET method in form 
+-<?php 
+$id = 10; 
+$button = "click here";
+?>
+
+<a href="get.php?id=<?php echo $id ?>"> <?php echo $button ?> </a>
+
+Cookies
+- datas saved to your browser by the server
+-server pull cookies in the future to interact with the user
+
+-$_COOKIE - global variable
+-$name = "name"; $value = "100"; $exp = time() + (60 * 60 * 24 * 7);
+-setcookie($name, $value, $exp);
+
+SESSION
+-session_start()
+  -make a file in the browser 
+$_SESSION["greetings"] = "HELLO!";
+echo $_SESSION["greetings"];
+
+OOP in PHP
+-class is a blueprint of an object
+-consist of properties and method
+
+-class Car{
+  function MoveWheels(){
+    //some code;
+  }
+}
+
+if(class_exists("Car")){
+  echo "Car Object exists";
+}
+
+if(class_exists("Car", "MoveWheels")){
+  echo "a method exists";
+}
+
+Instantiate a Class
+-$bmw = new Car();
+-$mercedez = new Car();
+
+Use a method in a Class
+-$bmw-> MoveWheels();
+-$mercede->MoveWheels();
+
+Define Class Properties
+-class Car(){
+  var $isOn = false;
+  var $wheels = 4;
+  var $model = "BMW";
+  var $color = "red";
+
+  function carOn(){
+    $this->isOn = true;
+  }
+}
+
+$bmw = new Car();
+$bmw->color = "blue";
+$bmw->carOn();
+
+OOP Class Inheritance in PHP
+-class Plane extends Car(){
+  
+}
+-Plane will inherit every property and method the Car have.
+-$jet = new Plane();
+echo $jet->wheels; // prints 4
+
+OOP Constructor in PHP
+-class Car(){
+  $wheels = 4;
+
+  function __construct(){
+    echo $this->wheels = 4;
+  }
+}
+
+OOP Data Access in PHP
+-class Car(){
+  private $isOn = false; // exclusive to the class, hidden even in sub-classes
+  protected $model = "bmw"; //exclusive to the itself and sub-classes
+  public $wheels = 4; // accessible by any class
+  var $color = red; //works like public
+}
+
+OOP Static variables in Classes
+-class Car(){
+  static $wheels = 4;
+}
+- static vars are attached to the class not in the object/instance
+-$bmw->wheels // return error because static
+-echo Car::$wheels; // correct way to use static
+
+PHPinfo or XAMPP
+-Xampp folder -> etc folder -> php.ini file
+- display_errors=on
+-helps you display errors in syntaxes
+
+-output_buffering=4096
+-ob_start(); //header ("Location: 'header.php'")
+
+PHP & CMS Blog System
