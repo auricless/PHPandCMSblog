@@ -361,3 +361,10 @@ PHPinfo or XAMPP
 -ob_start(); //header ("Location: 'header.php'")
 
 PHP & CMS Blog System
+-use API mysqli (new one)
+
+-foreach loop
+-foreach($var as $key => $value){
+  //some code
+}
+-$var is the array(assoc), $key is the label of array, $value is the actual value of the $key
