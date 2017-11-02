@@ -368,3 +368,70 @@ PHP & CMS Blog System
   //some code
 }
 -$var is the array(assoc), $key is the label of array, $value is the actual value of the $key
+
+DATABASE
+-go to cms(db) -> category(table) -> operations(tab)
+-rename it to categories
+-insert tab -> isnert new data
+
+SAMPLE Dynamic BLOG entries
+-<div class="col-md-8">
+
+                <h1 class="page-header">
+                    Page Heading
+                    <small>Secondary Text</small>
+                </h1>
+
+                <?php 
+                    $query = "SELECT * FROM posts";
+                    $result = mysqli_query($con, $query);
+
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $postTitle = $row['post_title'];
+                        $postAuthor = $row['post_author'];
+                        $postDate = $row['post_date'];
+                        $postImage = $row['post_image'];
+                        $postContent = $row['post_content'];
+
+                 ?> 
+
+<!--                 First Blog Post -->
+                <h2>
+                    <a href="#"><?php echo $postTitle ?></a>
+                </h2>
+                <p class="lead">
+                    by <a href="index.php"><?php echo $postAuthor ?></a>
+                </p>
+                <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $postDate ?></p>
+                <hr>
+                <img class="img-responsive" src="images/<?php echo $postImage ?>" alt="">
+                <hr>
+                <p><?php echo $postContent ?></p>
+                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+                <hr>
+                
+                <?php } ?>
+
+            </div>
+
+SearchBar and LIKE sql clause
+-if (isset($_POST['submit'])) {
+        $search = $_POST['search'];
+        
+        $query = "SELECT * FROM posts ";
+        $query .= "WHERE post_tag LIKE '%$search%'";
+
+        if (!$query) {
+            die("Query Error " . mysqli_error($con));
+        }
+-LIKE clause returns a data in db with pattern provided (ex. %search% which means search keyword in any position).
+
+Count number of rows in Query Result
+-$count = mysqli_num_rows($result);
+if($count == 0){
+  echo "NO RESULT";
+}
+
+Limit Query Result
+- SELECT * FROM categories LIMIT 3

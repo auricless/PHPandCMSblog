@@ -15,8 +15,28 @@
                 </h1>
 
                 <?php 
-                    $query = "SELECT * FROM posts";
-                    $result = mysqli_query($con, $query);
+
+                    if (isset($_POST['submit'])) {
+                        $search = $_POST['search'];
+                        
+                        $query = "SELECT * FROM posts ";
+                        $query .= "WHERE post_tag LIKE '%$search%'";
+
+                        if (!$query) {
+                            die("Query Error " . mysqli_error($con));
+                        }
+
+                        $result = mysqli_query($con, $query);
+
+                        $count = mysqli_num_rows($result);
+
+                        if(!$result){
+                            die("query failed");
+                        }
+
+                        if ($count == 0) {
+                            echo "<h1> NO RESULT </h1>";
+                        }else{
 
                     while ($row = mysqli_fetch_assoc($result)) {
                         $postTitle = $row['post_title'];
@@ -24,7 +44,6 @@
                         $postDate = $row['post_date'];
                         $postImage = $row['post_image'];
                         $postContent = $row['post_content'];
-
                  ?> 
 
 <!--                 First Blog Post -->
@@ -43,7 +62,12 @@
 
                 <hr>
                 
-                <?php } ?>
+                <?php 
+                    }
+                    } 
+                }
+
+                    ?>
 
             </div>
 
