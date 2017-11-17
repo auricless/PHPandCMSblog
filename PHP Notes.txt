@@ -151,7 +151,8 @@ Creating connection to MYSQL in PHP
 }
 
 -----CRUD in PHP-----
-C - Create    => $query = INSERT INTO users(username, password) VALUES($username, $password); 
+C - Create    => $query = INSERT INTO users(username, password) VALUES($username, $password); or
+C - Create    => $query = INSERT INTO users(username, password) VALUE($username);
 R - Read       => $query = SELECT * FROM users; [CODE] while($row = mysqli_fetch_assoc($result){ print_r($row); })
 U - Update  => $query = UPDATE users SET username = '$username', password = '$password' WHERE id = $id;
 D - Delete   => $query = DELETE FROM users WHERE id = $id;
@@ -159,11 +160,11 @@ D - Delete   => $query = DELETE FROM users WHERE id = $id;
 
 INSERT INTO tblName VALUES(frmValues)
 SELECT * FROM tblName
-UPDATE SET tblColumn1 = 'frmValue1', tblColumn2 = 'frmValue2' WHERE id = $id
+UPDATE tblnName SET tblColumn1 = 'frmValue1', tblColumn2 = 'frmValue2' WHERE id = $id
 DELETE FROM tblName WHERE id = $id
 
 CREATE
--$query = "INSERT INTO users('username', 'password') "
+-$query = "INSERT INTO users(username, password) "
 $query .= "VALUES('$username', '$password')";
 
 $result = mysqli_query($con, $query);
@@ -173,6 +174,24 @@ if(!$result){
 }else{
   echo "SUCCESSFUL";
 }
+
+or
+
+-if (isset($_POST['submit'])) {
+            $cat_title = $_POST['cat_title'];
+
+            $query = "INSERT INTO categories(cat_title) ";
+            $query .= "VALUE('${cat_title}')";
+
+            $result = mysqli_query($con, $query);
+
+            if(!$result){
+                die("Query failed");
+            }else{
+                echo "SUCCESS";
+            }
+        }
+
 
 READ
 -$query = "SELECT * FROM users";
@@ -441,6 +460,47 @@ if($count == 0){
 Limit Query Result
 - SELECT * FROM categories LIMIT 3
 
-BOOTSTRAP 3 additional tags
+BOOTSTRAP 3 additional class
 -breadcrumbs, a slash-based tab
 -page-wrapper, serve like frame-like
+
+HTML additional tags
+-<table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Category Title</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <td>1</td>
+                                        <td>Basketball</td>
+                                </tbody>
+                            </table>
+
+ADDING OUTPUT BUFFERING
+-add in line 1 ob_start();
+-sending/buffering request at the same time
+
+HEADER() method
+-it refreshes or redirect the user to the desire location.
+-header("Location: categories.php");
+
+GETTING ID FOR POST(update)
+-if (isset($_GET['edit'])) {
+    $get_cat_id = $_GET['edit'];
+     if (isset($_POST['update_category'])) {
+          $cat_title = $_POST['edit_cat'];
+
+          $query = "UPDATE categories SET cat_title = '{$cat_title}' ";
+          $query .= "WHERE cat_id = {$get_cat_id}";
+
+           $result = mysqli_query($con, $query);
+
+           if (!$result) {
+               die("QUERY failed" . mysqli_error($con));
+           }
+     }
+}
+
+DONT FORGET global $con once functions are refactored!
