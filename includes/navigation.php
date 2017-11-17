@@ -23,9 +23,10 @@
                             $catTitle = $row['cat_title'];
                             echo "<li><a href='#'>{$catTitle}</a></li>";
                         }
-
-
                      ?>
+                     <li>
+                        <a href="admin">Admin</a>
+                     </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

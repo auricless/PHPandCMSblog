@@ -5,6 +5,7 @@ $db["db_user"] = "root";
 $db["db_pass"] = "";
 $db["db_name"] = "cms";
 
+//DEFINE DB as CONSTANT
 foreach ($db as $key => $data) {
 	define(strtoupper($key), $data);
 }

@@ -141,7 +141,7 @@ Intro to Database
 -Click home icon, check the db, drop
 
 Creating connection to MYSQL in PHP
--$con = mysqli_connect("lcoalhost, "root", "", "loginapp");
+-$con = mysqli_connect("localhost, "root", "", "loginapp");
    -passing the function mysqli_connect with its parameter; localhost, username, password, database.
 
 -if($con){
@@ -156,6 +156,11 @@ R - Read       => $query = SELECT * FROM users; [CODE] while($row = mysqli_fetch
 U - Update  => $query = UPDATE users SET username = '$username', password = '$password' WHERE id = $id;
 D - Delete   => $query = DELETE FROM users WHERE id = $id;
 
+
+INSERT INTO tblName VALUES(frmValues)
+SELECT * FROM tblName
+UPDATE SET tblColumn1 = 'frmValue1', tblColumn2 = 'frmValue2' WHERE id = $id
+DELETE FROM tblName WHERE id = $id
 
 CREATE
 -$query = "INSERT INTO users('username', 'password') "
@@ -435,3 +440,7 @@ if($count == 0){
 
 Limit Query Result
 - SELECT * FROM categories LIMIT 3
+
+BOOTSTRAP 3 additional tags
+-breadcrumbs, a slash-based tab
+-page-wrapper, serve like frame-like
