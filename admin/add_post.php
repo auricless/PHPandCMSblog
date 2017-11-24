@@ -20,10 +20,7 @@ if (isset($_POST['create_post'])) {
     $query .= "VALUES('{$title}', '{$author}', {$category}, '{$status}', '{$image}', now(), ";
     $query .= "'{$tags}', '{$content}', {$post_comment_count})";
 
-	$result = mysqli_query($con, $query);
-	if (!$result) {
-		die("Query Failed " . mysqli_error($con));
-	}
+	confirmQuery($query);
 
 	
 }
