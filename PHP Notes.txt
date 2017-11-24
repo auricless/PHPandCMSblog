@@ -151,14 +151,14 @@ Creating connection to MYSQL in PHP
 }
 
 -----CRUD in PHP-----
-C - Create    => $query = INSERT INTO users(username, password) VALUES($username, $password); or
+C - Create    => $query = INSERT INTO users(username, password) VALUES('{$username}', '{$password}'); or
 C - Create    => $query = INSERT INTO users(username, password) VALUE($username);
 R - Read       => $query = SELECT * FROM users; [CODE] while($row = mysqli_fetch_assoc($result){ print_r($row); })
 U - Update  => $query = UPDATE users SET username = '$username', password = '$password' WHERE id = $id;
 D - Delete   => $query = DELETE FROM users WHERE id = $id;
 
 
-INSERT INTO tblName VALUES(frmValues)
+INSERT INTO tblName(tblRow) VALUES({frmValues})
 SELECT * FROM tblName
 UPDATE tblnName SET tblColumn1 = 'frmValue1', tblColumn2 = 'frmValue2' WHERE id = $id
 DELETE FROM tblName WHERE id = $id
@@ -463,6 +463,9 @@ Limit Query Result
 BOOTSTRAP 3 additional class
 -breadcrumbs, a slash-based tab
 -page-wrapper, serve like frame-like
+-table-bordered,
+-table-hover
+-table,
 
 HTML additional tags
 -<table class="table table-bordered table-hover">
@@ -504,3 +507,18 @@ GETTING ID FOR POST(update)
 }
 
 DONT FORGET global $con once functions are refactored!
+
+FORM with FILES UPLOAD
+-sample code:
+<form action="" method="post" enctype="multipart/form-data">
+<input type="file" name="post_img">
+</form>
+
+-retrieve in isset
+-sample code:
+$post_image = $_FILEs['post_img']['name'];
+$post_image_tmp = $_FILEs['post_img']['tmp_name'];
+
+FORM  with DATE RETRIEVE
+-sample code:
+$post_date = date('d-m-y');
