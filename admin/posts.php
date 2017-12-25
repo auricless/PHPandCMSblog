@@ -22,16 +22,21 @@
                         <?php 
                             if (isset($_GET['source'])) {
                                 $source = $_GET['source'];
+                            }
+                            else{
+                                $source = "";
+                            }
 
-                                switch ($source) {
-                                    case "add_post":
-                                        include "add_post.php";
-                                        break;
-                                    
-                                    default:
-                                        include "view_all_posts.php";
-                                        break;
-                                }
+                            switch ($source) {
+                                case "add_post":
+                                    include "add_post.php";
+                                    break;
+                                case "edit_post":
+                                    include "edit_post.php";
+                                    break;                                
+                                default:
+                                    include "view_all_posts.php";
+                                    break;
                             }
                          ?>
 

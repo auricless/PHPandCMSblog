@@ -15,7 +15,12 @@
                 </h1>
 
                 <?php 
-                    $query = "SELECT * FROM posts";
+
+                    if (isset($_GET['category'])) {
+                        $category_id = $_GET['category'];   
+                    }                 
+
+                    $query = "SELECT * FROM posts WHERE post_category_id = $category_id";
                     $result = mysqli_query($con, $query);
 
                     while ($row = mysqli_fetch_assoc($result)) {

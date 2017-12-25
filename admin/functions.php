@@ -5,6 +5,8 @@ function confirmQuery($query){
     $result = mysqli_query($con, $query);
     if (!$result) {
         die("Query Failed " . mysqli_error($con));
+    }else{
+        return $result;
     }
 }
 
